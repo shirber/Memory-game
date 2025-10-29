@@ -1,0 +1,400 @@
+:root{
+  --accent-1:#ff00c8;
+  --accent-2:#ffd400;
+  --accent-3:#00e7cf;
+  --accent-4:#2467d9;
+  --text-strong:#18202a;
+  --text-inv:#ffffff;
+  --glass-bg:rgba(255,255,255,.14);
+  --glass-border:rgba(255,255,255,.35);
+  --shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+
+/* רקע תמונה + שכבת כהייה עדינה לשיפור ניגודיות */
+body{
+  direction: rtl;
+  display:flex; align-items:center; justify-content:center;
+  min-height:100dvh; padding:24px;
+  background: center/cover no-repeat url("./images/34.jpg");
+  position:relative; overflow:hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body::before{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.25));
+  pointer-events:none;
+}
+
+/* הכרטיס המרכזי */
+.start-card{
+  position:relative;
+  width:min(520px, 92vw);
+  padding:28px;
+  border-radius:28px;
+  background: var(--glass-bg);
+  border:1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align:center;
+  animation: floatIn .6s cubic-bezier(.2,.7,.2,1) both;
+}
+
+.title{
+  margin:0 0 18px;
+  font-size: clamp(28px, 5vw, 44px);
+  line-height:1.1;
+  font-weight:800;
+  background: linear-gradient(90deg, var(--accent-1), #9b4dff);
+  -webkit-background-clip:text; background-clip:text;
+  color: transparent;
+  text-shadow: 0 2px 0 rgba(255,255,255,.15);
+}
+
+/* שדות וטפסים */
+.field{
+  width:100%;
+  height:54px;
+  padding:0 16px;
+  margin:8px 0;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.06);
+  background: rgba(255,255,255,.85);
+  color: var(--text-strong);
+  font-size:18px;
+  outline:none;
+  transition: box-shadow .2s, transform .06s;
+}
+.field::placeholder{ color:#6f7b88; }
+
+/* סלקט עם חץ מותאם */
+.select-wrap{ position:relative; }
+.select{
+  appearance:none; -webkit-appearance:none; -moz-appearance:none;
+  padding-right:16px; /* RTL – ימינה */
+}
+.select-wrap::after{
+  content:"▾";
+  position:absolute; inset-inline-end:14px; top:50%;
+  transform: translateY(-50%);
+  pointer-events:none; font-size:18px; color:#5a6b7a;
+}
+
+/* צבעים ייחודיים לפי סוג */
+#player-name{ background: linear-gradient(0deg, rgba(255,255,255,.92), rgba(255,255,255,.86)); }
+#difficulty{ background: linear-gradient(0deg, #fff5b3, #ffe879); }
+#content-world{ background: linear-gradient(0deg, #d8fff8, #b9fff2); }
+
+/* מצבי פוקוס והזנה */
+.field:focus{
+  box-shadow: 0 0 0 4px rgba(36,103,217,.18), 0 6px 18px rgba(0,0,0,.12);
+}
+.field:active{ transform: scale(.995); }
+
+/* כפתור קריאה לפעולה */
+.cta{
+  width:100%;
+  height:56px;
+  margin-top:10px;
+  border:none; border-radius:16px;
+  font-size:20px; font-weight:700; letter-spacing:.2px;
+  color:var(--text-inv);
+  background: linear-gradient(90deg, var(--accent-4), #5a87ff);
+  box-shadow: 0 12px 24px rgba(36,103,217,.35);
+  cursor:pointer;
+  transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+  position:relative; overflow:hidden;
+}
+.cta::before{
+  content:"";
+  position:absolute; inset:-120% -40%;
+  transform: rotate(20deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+  filter: blur(8px); 
+  animation: shine 3.5s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes shine{
+  0% { transform: translateX(-60%) rotate(20deg); opacity:.0}
+  35%{ opacity:.8 }
+  60% { transform: translateX(60%)  rotate(20deg); opacity:.0}
+  100%{ transform: translateX(60%)  rotate(20deg); opacity:.0}
+}
+.cta:hover{ transform: translateY(-2px); filter: brightness(1.05); }
+.cta:active{ transform: translateY(0); filter: brightness(.98); }
+.cta:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(90,135,255,.35), 0 12px 24px rgba(36,103,217,.35);
+}
+
+/* רספונסיביות */
+@media (max-width:480px){
+  .start-card{ padding:20px; border-radius:22px; }
+  .field, .cta{ height:52px; font-size:17px; }
+}
+
+/* אנימציה קטנה לכניסה */
+@keyframes floatIn{
+  from{ opacity:0; transform: translateY(12px) scale(.98); }
+  to  { opacity:1; transform: translateY(0) scale(1); }
+}
+#board {
+  width: 50%;
+  height: 50%;
+  border-radius: 20px;
+  border: 9px rgba(185, 81, 163, 0.7) solid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px;
+}
+
+.card {
+  border: 3px solid black;
+  border-radius: 20px;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  perspective: 1000px;
+  transition: transform 0.5s;
+
+}
+/*------------------------------------*/
+/*רספונסיביות*/
+@media (min-width: 960px) {
+  .card {
+    width: 60px;
+    height: 60px;
+    padding: 2px;
+    margin: 2px;
+  }
+
+  #timer-container img {
+    width: 130px;
+  }
+
+  #timer {
+    right: 50px;
+  }
+
+  #scores {
+    left: 50px;
+  }
+
+  #score-container img {
+    width: 120px;
+  }
+}
+
+@media (min-width: 1170px) {
+  #timer-container img {
+    width: 170px;
+    height: auto;
+  }
+
+  #timer {
+    right: 80px;
+  }
+
+  #scores {
+    left: 100px;
+    top: 400px;
+    ;
+  }
+
+  #score-container img {
+    width: 150px;
+  }
+}
+
+@media (min-width: 1414px) {
+  .card {
+    width: 75px;
+    height: 75px;
+    padding: 3px;
+    margin: 3px;
+  }
+
+  #timer-container img {
+    width: 200px;
+    height: auto;
+  }
+
+  #timer {
+    right: 120px;
+  }
+
+  #scores {
+    left: 145px;
+  }
+
+  #score-container img {
+    width: 200px;
+  }
+}
+
+@media (min-width: 1624px) {
+  .card {
+    width: 90px;
+    height: 90px;
+    padding: 5px;
+    margin: 5px;
+  }
+
+  #timer-container img {
+    width: 300px;
+    height: auto;
+  }
+
+  #timer {
+    right: 160px;
+  }
+
+  #scores {
+    left: 175px;
+  }
+
+  #score-container img {
+    width: 250px;
+  }
+}
+/*_____________________________________*/
+
+.card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.card:hover {
+  background-color: #f0f0f0;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+
+#scores {
+  height: 110px;
+}
+
+
+#timer,
+#scores {
+  font-size: 40px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  background-color: rgba(185, 81, 163, 0.7);
+  width: 160px;
+  padding: 10px;
+  border-radius: 10px;
+  position: absolute;
+  top: 260px;
+}
+
+
+
+#timer-container {
+  position: absolute;
+  top: 360px;
+  right: 110px;
+  text-align: center;
+}
+
+#score-container {
+  position: absolute;
+  top: 445px;
+  left: 135px;
+  text-align: center;
+}
+
+#score-container img {
+  height: auto;
+}
+
+#timer-container img {
+  height: auto;
+}
+
+.jump {
+  animation: bounce 1.5s ease-in-out;
+  animation-fill-mode: both;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+
+  16.66% {
+    transform: translateY(-80px);
+  }
+
+  33.33% {
+    transform: translateY(0);
+  }
+
+  49.99% {
+    transform: translateY(-80px);
+  }
+
+  66.66% {
+    transform: translateY(0);
+  }
+
+  83.33% {
+    transform: translateY(-80px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+
+.fading-out {
+  opacity: 0 !important;
+  transition: opacity 1s ease-out !important;
+}
+
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+
+
+#end-game {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background-color: rgba(185, 81, 163, 0.7);
+  color: white;
+  padding: 50px;
+  border-radius: 20px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  cursor: pointer;
+}
+
+
+#end-game h1 {
+  font-size: 100px;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}

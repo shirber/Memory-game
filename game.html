@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>משחק זיכרון</title>
+  <link rel="stylesheet" href="game.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;700&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div id="start-screen" class="start-card">
+    <h1 class="title">ברוכים הבאים למשחק הזיכרון</h1>
+
+    <input id="player-name" class="field" type="text" placeholder="הכניסו שם שחקן">
+
+    <div class="select-wrap">
+      <select id="difficulty" class="field select">
+        <option value="easy">קל</option>
+        <option value="medium">בינוני</option>
+        <option value="hard">קשה</option>
+      </select>
+    </div>
+
+    <div class="select-wrap">
+      <select id="content-world" class="field select">
+        <option>עולם תוכן</option>
+        <option>חיות</option>
+        <option>פירות</option>
+        <option>כלי תחבורה</option>
+      </select>
+    </div>
+
+    <button id="start-button" class="cta">יאללה לשחק</button>
+  </div>
+  <div id="game-screen" style="display: none;">
+    <div id="board"></div>
+    <div id="timer">03:00</div>
+    <div id="timer-container"><img src="images/t.png" alt="תמונה מתחת לטיימר"></div>
+    <div id="scores"> :נקודות<br> <span id="score">0</span></div>
+    <div id="score-container"><img src="images/s.png" alt="תמונה מתחת לניקוד" id="doll-img"></div>
+
+
+
+  </div>
+  <div id="end-game" class="hidden">
+    <h1>Game Over</h1>
+  </div>
+  <audio class="correct" src="sounds/UPPER.WAV"></audio>
+  <audio class="wrong" src="sounds/OUT_SPIR.WAV"></audio>
+  <audio class="press" src="sounds/BOUNCED_.WAV"></audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script src="game.js"></script>
+</body>
+
+</html>
